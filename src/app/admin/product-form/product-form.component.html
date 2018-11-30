@@ -1,0 +1,94 @@
+
+<div class="row">
+  <div class="col-md-6">
+      <form #f="ngForm" (ngSubmit)="save(f.value)">
+
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input #nombre="ngModel" [(ngModel)]="producto && producto.nombre" name="nombre" id="nombre" type="text" class="form-control" required>
+            <div class="alert alert-danger" *ngIf="nombre.touched && nombre.invalid">
+              Nombre es Requerido
+            </div>
+          </div>
+        
+          <div class="form-group">
+              <label for="descripcion">Descripcion</label>
+              <input #descripcion="ngModel" [(ngModel)]="producto && producto.descripcion" name="descripcion" id="descripcion" type="text" class="form-control" required>
+              <div class="alert alert-danger" *ngIf="descripcion.touched && descripcion.invalid">
+                  Descripcion es Requerida
+                </div>
+            </div>
+        
+          <label for="precio">Precio</label>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">$</span>
+              </div>
+              <input #precio="ngModel" [(ngModel)]="producto && producto.precio" name="precio" type="number" class="form-control" aria-label="Precio" aria-describedby="basic-addon1" required>     
+          </div>
+          <div class="alert alert-danger" *ngIf="precio.touched && precio.invalid">
+                Precio es Requerido
+            </div>
+
+          <label for="descuento">Descuento</label>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">%</span>
+              </div>
+              <input [(ngModel)]="producto && producto.descuento" name="descuento" type="number" class="form-control" aria-label="descuento" aria-describedby="basic-addon1">
+          </div>
+        
+          <div class="form-group">
+              <label for="categoria">Categoria</label>
+              <select #categoria="ngModel" [(ngModel)]="producto && producto.categoria" name="categoria" id="categoria" class="form-control">
+                <option value=""></option>
+                <option *ngFor="let c of categorias$ | async" [value]="c.key">
+                  {{ c.payload.val().name }}
+                </option>
+              </select>
+              <div class="alert alert-danger" *ngIf="categoria.touched && categoria.invalid">
+                  Categoria es Requerida
+                </div>
+          </div>
+        
+
+          <div class="form-group">
+              <label for="imageUrl">Imagen</label>
+              <input #imageUrl="ngModel" [(ngModel)]="producto && producto.imageUrl" name="imageUrl" id="imageUrl" type="text" class="form-control" required>
+            </div>
+
+          <!-- <div class="form-group">
+            <label for="imageUrl">Url de Imagen</label>
+            <input #imageUrl="ngModel" ngModel name="imageUrl" id="imageUrl" type="text" class="form-control">
+          </div> -->
+        
+          <button class="btn btn-primary">Save</button>
+          <button type="button" (click)="delete()" class="btn btn-danger">Eliminar</button>
+        
+        </form>
+  </div>
+  <div class="col-md-6">
+      <div class="card" style="width: 18rem;">
+          
+          <div class="card-body">
+            <div *ngIf="producto; else noproducto">
+              <img class="card-img-top" [src]="producto && producto.imageUrl">
+              <h5 class="card-title">{{ producto.nombre }}</h5>
+              <p class="card-text">{{ producto.descripcion }}</p>
+              <h5 class="card-text">{{ producto.precio | currency:'USD':symbol }}</h5>
+            </div>
+            <ng-template #noproducto>
+                <img class="card-img-top" [src]="imageUrl.value">
+                <h5 class="card-title">{{ nombre.value }}</h5>
+                <p class="card-text">{{ descripcion.value }}</p>
+                <h5 class="card-text">{{ precio.value | currency:'USD':"symbol" }}</h5>
+            </ng-template>
+            
+            
+            <a href="#" class="btn btn-outline-warning">Añadir a la Bolsa</a>
+          </div>
+        </div>
+    </div>
+</div>
+
+

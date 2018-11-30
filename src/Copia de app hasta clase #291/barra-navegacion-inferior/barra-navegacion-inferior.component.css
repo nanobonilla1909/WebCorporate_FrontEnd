@@ -1,0 +1,16 @@
+.navbar-inferior{
+    background:grey;
+}
+
+.nav-link-inferior{
+    color: white;
+}
+
+#dropdown01 {
+    color: white;
+ 
+}
+
+.dropdown-toggle{
+    cursor: pointer;
+}
